@@ -29,7 +29,7 @@ endif()
 
 # D3D12MemoryAllocator contains an sample application which is not build by default
 option(D3D12MA_BUILD_SAMPLE "Build D3D12MemoryAllocator sample application" OFF)
+option(D3D12MA_USING_HYBRID_CRT "Using hybrid C runtime, avoid link to vcruntime*.dll" OFF)
 
 message(STATUS "D3D12MA_BUILD_SAMPLE = ${D3D12MA_BUILD_SAMPLE}")
-
 add_subdirectory(src)

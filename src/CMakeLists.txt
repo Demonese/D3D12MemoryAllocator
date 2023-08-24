@@ -106,6 +106,23 @@ if(D3D12MA_BUILD_SAMPLE)
                 D3D12Sample
                 PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
             )
+
+            # hybrid C runtime, static link to vcruntime*, dynamic link do universal C runtime (Windows 10+ system component)
+            # https://github.com/microsoft/WindowsAppSDK/blob/main/docs/Coding-Guidelines/HybridCRT.md
+            target_compile_options(D3D12MemoryAllocator PRIVATE
+                "/MT$<$<CONFIG:Debug>:d>"
+            )
+            target_link_options(D3D12MemoryAllocator PRIVATE
+                "/nodefaultlib:libucrt$<$<CONFIG:Debug>:d>.lib"
+                "/defaultlib:ucrt$<$<CONFIG:Debug>:d>.lib"
+            )
+            target_compile_options(D3D12Sample PRIVATE
+                "/MT$<$<CONFIG:Debug>:d>"
+            )
+            target_link_options(D3D12Sample PRIVATE
+                "/nodefaultlib:libucrt$<$<CONFIG:Debug>:d>.lib"
+                "/defaultlib:ucrt$<$<CONFIG:Debug>:d>.lib"
+            )
         endif()
 
         set_target_properties(
